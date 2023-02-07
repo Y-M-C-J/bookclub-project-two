@@ -7,6 +7,11 @@ Book.belongsTo(User, {
   onDelete: 'CASCADE',
 });
 
+User.hasMany(Book, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
+
 Book.hasMany(Comment, {
   foreignKey: 'book_id',
   onDelete: 'CASCADE',
