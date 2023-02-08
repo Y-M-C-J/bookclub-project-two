@@ -1,9 +1,19 @@
+<!-- 
+  Displaying the book information centered on the page 
+  name: the name of the book
+  author: the author of the book
+  description: the description of the book
+  user.name: the name of the user who created the book
+  format_date: a function to format the date of when the book was created
+-->
 <div class="text-center">
   <h2>{{name}}</h2>
   <p>{{{author}}}</p>
   <p>{{description}}</p>
   <p>Created by {{user.name}} on {{format_date date_created}}</p>
   <p>
+    <!-- Button to allow the user to read the book -->
     <button class="btn btn-primary">Read this book!</button>
   </p>
 </div>
+
