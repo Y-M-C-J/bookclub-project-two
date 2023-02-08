@@ -1,4 +1,4 @@
-const newFormHandler = async (event) => {
+const newBook = async (event) => {
   event.preventDefault();
 
   const name = document.querySelector('#book-name').value.trim();
@@ -41,7 +41,7 @@ const delButtonHandler = async (event) => {
 document
   .querySelector('.new-book-form')
   .addEventListener('submit', newFormHandler);
-``
+``;
 document
   .querySelector('.book-list')
   .addEventListener('click', delButtonHandler);
