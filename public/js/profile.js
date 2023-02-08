@@ -41,7 +41,7 @@ const delButtonHandler = async (event) => {
 document
   .querySelector('.new-book-form')
   .addEventListener('submit', newFormHandler);
-
+``
 document
   .querySelector('.book-list')
   .addEventListener('click', delButtonHandler);

@@ -8,8 +8,24 @@ router.post('/', withAuth, async (req, res) => {
       ...req.body,
       user_id: req.session.user_id,
     });
+    await newBook.addUser(req.session.user_id, {
+      through: { selfGranted: false },
+    });
 
     res.status(200).json(newBook);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.post('/:id', withAuth, async (req, res) => {
+  try {
+    const findBook = await Book.findByPk(req.params.id, {});
+    await findBook.addUser(req.session.user_id, {
+      through: { selfGranted: false },
+    });
+
+    res.status(200).json(findBook);
   } catch (err) {
     res.status(400).json(err);
   }

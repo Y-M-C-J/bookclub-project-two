@@ -13,10 +13,11 @@ const seedDatabase = async () => {
   });
 
   for (const book of bookData) {
-    await Book.create({
+    const bookData = await Book.create({
       ...book,
       user_id: users[Math.floor(Math.random() * users.length)].id,
     });
+    await bookData.addUser(users[0], { through: { selfGranted: false } });
   }
 
   process.exit(0);
