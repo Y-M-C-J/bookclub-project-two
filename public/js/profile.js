@@ -1,4 +1,4 @@
-const newBook = async (event) => {
+const newFormHandler = async (event) => {
   event.preventDefault();
 
   const name = document.querySelector('#book-name').value.trim();
