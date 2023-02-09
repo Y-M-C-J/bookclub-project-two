@@ -27,23 +27,30 @@
     </form>
   </div>
 
-  {{#if books.length}}
-  <div class="col-md-6 project-list">
+{{#if books.length}}
+  <!-- This section is displayed only if books is a non-empty array -->
+  <div id="current-books" class="col-md-6 project-list">
+    <!-- Section header -->
     <h3>Current Books:</h3>
 
     {{#each books as |book|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/book/{{book.id}}">{{book.name}}</a></h4>
+      <!-- Iterate over each book in the books array -->
+      <div class="row mb-2">
+        <div class="col-md-8">
+          <!-- Link to individual book details -->
+          <h4><a href="/book/{{book.id}}">{{book.name}}</a></h4>
+        </div>
+        <div class="col-md-4">
+          <!-- Delete button for each book -->
+          <button class="btn btn-sm btn-danger" data-id="{{book.id}}">DELETE</button>
+        </div>
       </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{book.id}}">DELETE</button>
-      </div>
-    </div>
     {{/each}}
   </div>
-  {{/if}}
+{{/if}}
 </div>
+<!-- End of parent row container -->
+
 
 {{!-- <script src="./js/profile.js"></script> --}}
 <script src="./js/fetchBookData.js"></script>

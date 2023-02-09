@@ -1,12 +1,28 @@
 const router = require('express').Router();
 const { Book } = require('../../models'); // import the model
 const withAuth = require('../../utils/auth'); // to check if user is logged in
+const nodeFetch = require('node-fetch'); // import node-fetch for making HTTP requests
 
-// create a new book and associate the book with the user
+// POST route for creating a new book and associating it with the user
 router.post('/', withAuth, async (req, res) => {
   try {
-    // create a new book with the user_id from the session
+    // URL for the Google Books API
+    let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
+    // Get the API key from the environment variables
+    let apiKey = process.env.API_KEY;
+    // Get the name of the book from the request body
+    let bookName = req.body.name;
+    // Build the complete URL for the API request
+    let requestUrl = `${baseURL}${bookName}&key=${apiKey}`;
+
+    // Fetch the response from the Google Books API
+    const bookVolumesRes = await nodeFetch(requestUrl);
+    // Parse the response as JSON
+    const bookVolumes = await bookVolumesRes.json();
+
+    // Create a new book in the database
     const newBook = await Book.create({
+      // Include the properties from the request body
       ...req.body,
       user_id: req.session.user_id, // add the user_id from the session to the new book
     });
@@ -15,8 +31,10 @@ router.post('/', withAuth, async (req, res) => {
       through: { selfGranted: false }, // make the user not be able to see the book
     });
 
-    res.status(200).json(newBook); // send back the book
-  } catch (err) { // catch any errors
+    console.log(bookVolumes);
+    res.status(200).json({ newBook, bookVolumes }); // send back the book
+  } catch (err) {
+    // catch any errors
     res.status(400).json(err); // send back the error
   }
 });
@@ -32,7 +50,8 @@ router.post('/:id', withAuth, async (req, res) => {
     });
 
     res.status(200).json(findBook); // send back the book
-  } catch (err) { // catch any errors
+  } catch (err) {
+    // catch any errors
     res.status(400).json(err); // send back the error
   }
 });
@@ -43,8 +62,8 @@ router.delete('/:id', withAuth, async (req, res) => {
     // destroy the book data that matches the book's id and the user's id
     const bookData = await Book.destroy({
       where: {
-        id: req.params.id, 
-        user_id: req.session.user_id, 
+        id: req.params.id,
+        user_id: req.session.user_id,
       },
     });
 
@@ -55,10 +74,11 @@ router.delete('/:id', withAuth, async (req, res) => {
     }
 
     res.status(200).json(bookData); // send back the book
-  } catch (err) { // catch any errors
+  } catch (err) {
+    // catch any errors
     res.status(500).json(err); // send back the error
   }
 });
-// export the router
-module.exports = router; 
 
+// export the router
+module.exports = router;
