@@ -1,16 +1,16 @@
 [
   {
-    "name": "Harry Potter",
+    "title": "Harry Potter",
     "author": "JK ROWLING",
     "description": "You're a wizard Harry!"
   },
   {
-    "name": "Lord of the Rings",
+    "title": "Lord of the Rings",
     "author": "TOLKEIN",
     "description": "One ring to rule them all."
   },
   {
-    "name": "Neuromancer",
+    "title": "Neuromancer",
     "author": "W. Gibson",
     "description": "The original cyberpunk."
   }

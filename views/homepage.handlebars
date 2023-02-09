@@ -5,7 +5,7 @@
     <h2>
       <!-- Call helper function with triple brackets to render the emoji span as HTML -->
       {{{get_emoji}}}
-      <a href="/book/{{book.id}}">{{book.name}}, by {{book.author}}</a>
+      <a href="/book/{{book.id}}">{{book.title}}, by {{book.author}}</a>
     </h2>
     <p>Recommended by {{book.user.name}} on {{format_date book.date_added}}</p>
   </div>
