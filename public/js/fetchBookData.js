@@ -4,15 +4,15 @@
 const newBookData = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#book-name').value.trim();
+  const title = document.querySelector('#book-title').value.trim();
   const author = document.querySelector('#book-author').value.trim();
   const description = document.querySelector('#book-desc').value.trim();
 
   let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
   // let apiKey = process.env.GB_KEY;
   let apiKey = 'AIzaSyAXDJg5GpbWtxabjgodzCP0w43gEuPYVPE';
-  let bookName = name;
-  let requestUrl = `${baseURL}${bookName}&key=${apiKey}`;
+  let bookTitle = title;
+  let requestUrl = `${baseURL}${bookTitle}&key=${apiKey}`;
 
   // Fetch baseURL code snippet
 

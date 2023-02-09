@@ -1,14 +1,14 @@
 const newFormHandler = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#book-name').value.trim();
+  const title = document.querySelector('#book-title').value.trim();
   const author = document.querySelector('#book-author').value.trim();
   const description = document.querySelector('#book-desc').value.trim();
 
-  if (name && author && description) {
+  if (title && author && description) {
     const response = await fetch(`/api/books`, {
       method: 'POST',
-      body: JSON.stringify({ name, author, description }),
+      body: JSON.stringify({ title, author, description }),
       headers: {
         'Content-Type': 'application/json',
       },
