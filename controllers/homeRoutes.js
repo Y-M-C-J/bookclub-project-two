@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Book, User } = require('../models');
+const { Book, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -15,7 +15,13 @@ router.get('/', async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const books = bookData.map((book) => book.get({ plain: true }));
+    const books = bookData
+      .map((book) => book.get({ plain: true }))
+      .map((book) => {
+        book.user = book.users[0]
+        return book
+      })
+      ;
 
     // Pass serialized data and session flag into template
     res.render('homepage', {
@@ -35,11 +41,18 @@ router.get('/book/:id', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Comment,
+          include: {
+            model: User
+          }
+        }
       ],
     });
 
     const book = bookData.get({ plain: true });
-
+    book.user = book.users[0]
+    
     res.render('book', {
       ...book,
       logged_in: req.session.logged_in,

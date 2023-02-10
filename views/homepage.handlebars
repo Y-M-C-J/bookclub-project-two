@@ -1,18 +1,17 @@
 <!-- Loop over each object in the projects array -->
 {{#each books as |book| }}
-<div class="row mb-4 project">
-  <div class="col-md-5">
-    <h2>
-      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-      {{{get_emoji}}}
-      <a href="/book/{{book.id}}">{{book.name}}, by {{book.author}}</a>
-    </h2>
-    <p>Recommended by {{book.user.name}} on {{format_date book.date_added}}</p>
-  </div>
-  <div class="col-md-7">
-    <p>
-      {{book.description}}
-    </p>
+<div class="row mb-4 project py-2">
+  <div class="col-12">
+    <div style="display:flex;gap:1rem">
+      <img src={{book.thumbnail}} style="width:128px;heigh180px" />
+      <div>
+        <h4>
+          <a href="/book/{{book.id}}">{{book.name}}, by {{book.author}}</a>
+        </h4>
+        <p>Recommended by {{book.user.name}} on {{format_date book.date_added}}</p>
+        <p>{{book.description}}</p>
+      </div>
+    </div>
   </div>
 </div>
 {{/each}}

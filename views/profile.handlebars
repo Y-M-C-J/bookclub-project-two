@@ -5,8 +5,8 @@
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6">
-    <h3>Recommend a new book:</h3>
+  <div class="col-12 mb-5">
+    <h3 class="mb-3">Recommend a new book:</h3>
 
     <form class="form new-book-form">
       <div class="form-group">
@@ -22,28 +22,35 @@
         <textarea class="form-input" id="book-desc" name="book-desc"></textarea>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button id="addbook-btn" type="submit" class="btn btn-primary">Add</button>
       </div>
     </form>
   </div>
 
   {{#if books.length}}
-  <div class="col-md-6 project-list">
-    <h3>Current Books:</h3>
+  <div class="col-12 project-list">
+    <h3 class="mb-3">Current Books:</h3>
 
-    {{#each books as |book|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/book/{{book.id}}">{{book.name}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{book.id}}">DELETE</button>
-      </div>
+    <div id="current-books" class="books-container">
+      {{#each books as |book|}}
+      <a href="/book/{{book.id}}">
+        <div class="profile-book">
+          <img src={{book.thumbnail}} style="height: 180px;width: 128px;" />
+          <h6 class="h4 d-inline-block text-truncate" style="max-width: 128px;">{{book.name}}</h6>
+          <button onclick="deleteBook(event,{{book.id}})" class="btn btn-sm btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 448 512">
+              <path fill="#fff"
+                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+            </svg>
+          </button>
+        </div>
+      </a>
+      {{/each}}
     </div>
-    {{/each}}
   </div>
   {{/if}}
 </div>
 
-{{!-- <script src="./js/profile.js"></script> --}}
+{{!--
+<script src="./js/profile.js"></script> --}}
 <script src="./js/fetchBookData.js"></script>
