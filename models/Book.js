@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Book extends Model { }
+class Book extends Model {}
 
 Book.init(
   {
@@ -20,10 +20,10 @@ Book.init(
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     thumbnail: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     date_added: {
       type: DataTypes.DATE,
