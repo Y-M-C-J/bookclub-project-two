@@ -6,14 +6,46 @@
   user.name: the name of the user who created the book
   format_date: a function to format the date of when the book was created
 -->
-<div class="text-center">
-  <h2>{{name}}</h2>
-  <p>{{{author}}}</p>
-  <p>{{description}}</p>
-  <p>Created by {{user.name}} on {{format_date date_created}}</p>
-  <p>
-    <!-- Button to allow the user to read the book -->
-    <button class="btn btn-primary">Read this book!</button>
-  </p>
+<div class="book-page">
+  <div class="book mb-3">
+    <img src="{{ thumbnail }}" />
+    <div class="info">
+      <h2>{{name}}</h2>
+      <p>{{{author}}}</p>
+      <p>{{description}}</p>
+      <p>Created by {{user.name}} on {{format_date date_added}}</p>
+      <p>
+        <button class="btn btn-primary">Read this book!</button>
+      </p>
+    </div>
+  </div>
+
+  <h4 class="mb-3">Comments: ({{get_length comments}})</h4>
+
+  {{#unless logged_in}}
+  <p>Login to add your comment...</p>
+  {{/unless }}
+
+  <div class="mb-5">
+    {{#each comments as |comment|}}
+    <div class="comment">
+      <div style="display:flex;justify-content:space-between">
+        <h6>by {{comment.user.name}} | {{comment.title}}</h6>
+        <span>{{format_date comment.createdAt}}</span>
+      </div>
+      <p>{{comment.body}}</p>
+    </div>
+    {{/each}}
+  </div>
+
+  {{#if logged_in}}
+    <input type="text" id="comment-title" class="w-100 form-input mb-2" placeholder="Comment title">
+    <textarea id="comment-body" rows="5" class="w-100 form-input" placeholder="Your comment body..."></textarea>
+    <button id="add-comment" data-bookId={{id}} class="btn btn-light">Add Comment</button>
+  {{/if}}
 </div>
 
+
+{{#if logged_in}}
+<script src="/js/book.js"></script>
+{{/if}}

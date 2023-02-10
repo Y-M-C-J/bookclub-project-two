@@ -1,13 +1,10 @@
-// Import the express Router
 const router = require('express').Router();
-
-// Import the user routes and book routes
 const userRoutes = require('./userRoutes');
 const bookRoutes = require('./bookRoutes');
+const commentsRoutes = require('./commentsRoutes');
 
-// Use the user routes and book routes in the main router
 router.use('/users', userRoutes);
 router.use('/books', bookRoutes);
+router.use('/comments', commentsRoutes);
 
-// Export the main router for use in other parts of the application
 module.exports = router;

@@ -1,57 +1,70 @@
-// Function to add new book data to the list of books
+// require('dotenv').config();
+// require('dotenv').config({ path: require('find-config')('.env') });
+
 const newBookData = async (event) => {
-  // Prevents the default form submit behavior
   event.preventDefault();
 
-  // Get the values of the book name, author and description fields
   const name = document.querySelector('#book-name').value.trim();
   const author = document.querySelector('#book-author').value.trim();
-  // The conditional (?.) operator is used to handle the case where the description field is not present
   const description = document.querySelector('#book-desc')?.value?.trim();
+  const addBookBtn = document.querySelector('#addbook-btn')
 
-  // Only proceed if the name and author fields have values
-  if (name && author /*&& description*/) {
-    // Make a POST request to the "/api/books" endpoint
+  if (name && author) {
+    addBookBtn.textContent = 'Adding...'
+    addBookBtn.setAttribute('disabled', true)
     const response = await fetch(`/api/books`, {
       method: 'POST',
-      // Convert the name, author and description values to JSON and send them in the request body
       body: JSON.stringify({ name, author, description }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    // If the response is successful (status code 200-299)
     if (response.ok) {
-      // Parse the JSON data from the response
-      const data = await response.json();
+      const data = await response.json()
 
-      // Build the HTML for the new book using the data returned from the server
       const newBook = `
-      <div class="row mb-2">
-        <div class="col-md-8">
-          <h4><a href="/book/${data.newBook.id}">${data.newBook.name}</a></h4>
+      <a href="/book/${data.newBook.id}">
+        <div class="profile-book">
+          <img src=${data.newBook.thumbnail} style="height: 180px;width: 128px;" />
+          <h6 class="h4 d-inline-block text-truncate" style="max-width: 128px;">${data.newBook.name}</h6>
+          <button onclick="deleteBook(event,${data.newBook.id})" class="btn btn-sm btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 448 512">
+              <path fill="#fff"
+                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+            </svg>
+          </button>
         </div>
-        <div class="col-md-4">
-          <button class="btn btn-sm btn-danger" data-id="${data.newBook.id}">DELETE</button>
-        </div>
-      </div>`;
+      </a>`
 
-      // Insert the HTML for the new book into the "current-books" element
-      document
-        .querySelector('#current-books')
-        .insertAdjacentHTML('beforeend', newBook);
+      document.querySelector('#current-books').insertAdjacentHTML('beforeend', newBook)
 
-      // Log the "bookVolumes" data returned from the server for debugging purposes
-      console.log(data.bookVolumes);
+      addBookBtn.textContent = 'Add'
+      addBookBtn.removeAttribute('disabled')
+      console.log(data.bookVolumes)
+
     } else {
-      // If the response was not successful, show an alert with an error message
       alert('Failed to add book');
     }
   }
 };
 
-// Attach the "newBookData" function as an event listener to the "submit" event of the "new-book-form" element
+const deleteBook = async (event, id) => {
+  event.preventDefault();
+
+  const response = await fetch(`/api/books/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    window.location.replace('/profile')
+  }
+}
+
+
 document
   .querySelector('.new-book-form')
   .addEventListener('submit', newBookData);

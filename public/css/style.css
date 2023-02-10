@@ -1,5 +1,16 @@
-header, .project:not(:last-child) {
+header,
+.project:not(:last-child),
+.comment:not(:last-child) {
   border-bottom: 1px solid #ccc;
+}
+
+.comment {
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.comment p {
+  margin: 0;
 }
 
 .no-button {
@@ -21,4 +32,35 @@ header, .project:not(:last-child) {
   color: #056605;
   font-weight: bold;
   margin-left: -5px;
+}
+
+.project-list .books-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.project-list .books-container .profile-book {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.project-list .books-container button {
+  position: absolute;
+  padding: 0.3rem 0.4rem;
+  top: 0.25rem;
+  right: 0.25rem;
+  cursor: pointer;
+}
+
+.book-page .book {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.book-page .book img {
+  width: 128px;
+  height: 180px;
 }

@@ -1,16 +1,19 @@
 module.exports = {
+  get_length: (array) => {
+    return array.length
+  },
   format_date: (date) => {
-    // Format date in the MM/DD/YYYY format
-    return date.toLocaleDateString();
+    // Format date as MM/DD/YYYY
+    return date?.toLocaleDateString();
   },
   format_amount: (amount) => {
-    // Format large numbers with commas as thousands separators
-    return parseInt(amount).toLocaleString();
+    // format large numbers with commas
+    return parseInt(amount)?.toLocaleString();
   },
   get_emoji: () => {
     const randomNum = Math.random();
 
-    // Return a random emoji based on a random number
+    // Return a random emoji
     if (randomNum > 0.7) {
       return `<span for="img" aria-label="lightbulb">💡</span>`;
     } else if (randomNum > 0.4) {
