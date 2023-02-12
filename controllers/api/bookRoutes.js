@@ -6,33 +6,33 @@ const nodeFetch = require('node-fetch');
 // create a new book and associate the book with the user
 router.post('/', withAuth, async (req, res) => {
   try {
-    // setup request url
+    //setup request url
     let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
 
-    // api key from the .env
+    //api key from the .env
     let apiKey = process.env.API_KEY;
     let bookName = req.body.name;
 
-    // full api request
+    //full api request
     let requestUrl = `${baseURL}${bookName}&key=${apiKey}`;
 
-    // make request and wait for the json results
+    //make request and wait for the json results
     const bookVolumesRes = await nodeFetch(requestUrl);
     let bookVolumes = await bookVolumesRes.json();
 
-    // it returns an object that has items array (it can be null so we used ?. instead of directly . to prevent any undefined errors)
+    //it returns an object that has items array (it can be null so we used ?. instead of directly . to prevent any undefined errors)
 
-    // some items may not have thumbnail so we filter only the items that has thumbnail if we did not filter sometimes the first array item may not contain thumbnail
+    //some items may not have thumbnail so we filter only the items that has thumbnail if we did not filter sometimes the first array item may not contain thumbnail
     let bookImage = bookVolumes?.items.filter(
       (b) => b?.volumeInfo?.imageLinks?.thumbnail
     );
 
-    // same here like thumbnail but this time for description
-    let bookDescription = bookVolumes?.items.filter(
-      (b) => b?.volumeInfo?.description
+    //same here like thumbnail but this time for description
+    let bookInfo = bookVolumes?.items.filter(
+      (b) => b?.volumeInfo?.description && b?.volumeInfo?.authors?.length
     );
 
-    // by default the thumbnail and description has those values
+    //by default the thumbnail and description has those values
     let thumbnail =
       'https://ankan-kagoshima.jp/data/wp-content/themes/cms/images/dvd/noimage.jpg';
     let description = 'No description available for this book';
@@ -42,9 +42,10 @@ router.post('/', withAuth, async (req, res) => {
       thumbnail = bookImage[0]?.volumeInfo?.imageLinks?.thumbnail;
     }
 
-    // same thing if book Description has values then we set the description to the new value instead of the default one
-    if (bookDescription?.length) {
-      description = bookDescription[0]?.volumeInfo?.description;
+    //same thing if bookDescription has values then we set the description to the new value instead of the default one
+    if (bookInfo?.length) {
+      req.body.author = bookInfo[0]?.volumeInfo?.authors[0];
+      description = bookInfo[0]?.volumeInfo?.description;
     }
     // create a new book with the user_id from the session
     const newBook = await Book.create({

@@ -20,11 +20,9 @@ router.get('/', async (req, res) => {
     const books = bookData
       .map((book) => book.get({ plain: true }))
       .map((book) => {
-        book.user = book.users[0]
-        return book
-      })
-      ;
-
+        book.user = book.users[0];
+        return book;
+      });
     // Pass serialized data and session flag into template
     res.render('homepage', {
       books,
@@ -46,17 +44,18 @@ router.get('/book/:id', async (req, res) => {
         {
           model: Comment,
           include: {
-            model: User
-          }
-        }
+            model: User,
+          },
+        },
       ],
     });
 
     const book = bookData.get({ plain: true });
-    book.user = book.users[0]
+    book.user = book.users[0];
 
-
-    const readListBook = await ReadList.findOne({ where: { book_id: book.id } })
+    const readListBook = await ReadList.findOne({
+      where: { book_id: book.id },
+    });
 
     res.render('book', {
       ...book,
@@ -90,15 +89,14 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/readList', withAuth, async (req, res) => {
   try {
-    //find all books and include the book with them 
+    //find all books and include the book with them
     const readListData = await ReadList.findAll({
       where: { user_id: req.session.user_id },
       include: Book,
-    })
-
+    });
 
     // Serialize data so the template can read it
-    const readList = readListData.map((list) => list.get({ plain: true }))
+    const readList = readListData.map((list) => list.get({ plain: true }));
 
     //render readlist.handlebars page
     //send count variable so we can check if there is any books in the readlist
@@ -107,11 +105,10 @@ router.get('/readList', withAuth, async (req, res) => {
       count: readList.length,
       logged_in: req.session.logged_in,
     });
-
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
@@ -123,29 +120,27 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-
-
 //search book by query route (q means query)
 router.get('/search', async (req, res) => {
-  //get the q query paramenter from url
-  const { q } = req.query
+  //get the q query parameter from url
+  const { q } = req.query;
 
   //if the q has a value then we will search a book
-  const where = q ? {
-
-    //Sequelize.Op.or is the OR operator in a SQL statment
-    //so we want to match the name or author or description
-    [Sequelize.Op.or]: [
-      //Sequelize.Op.like is the LIKE operator in a SQL statment
-      //SELECT * FROM book WHERE name LIKE '%harry%' OR author LIKE '%harry%' OR description LIKE '%harry%'
-      //like this we have a deep search in books
-      { name: { [Sequelize.Op.like]: `%${q}%` } },
-      { author: { [Sequelize.Op.like]: `%${q}%` } },
-      { description: { [Sequelize.Op.like]: `%${q}%` } },
-    ],
-  }
-    //else we will return a empty object means get all {}
-    : {}
+  const where = q
+    ? {
+        //Sequelize.Op.or is the OR operator in a SQL statment
+        //so we want to match the name or author or description
+        [Sequelize.Op.or]: [
+          //Sequelize.Op.like is the LIKE operator in a SQL statment
+          //SELECT * FROM book WHERE name LIKE '%harry%' OR author LIKE '%harry%' OR description LIKE '%harry%'
+          //like this we have a deep search in books
+          { name: { [Sequelize.Op.like]: `%${q}%` } },
+          { author: { [Sequelize.Op.like]: `%${q}%` } },
+          { description: { [Sequelize.Op.like]: `%${q}%` } },
+        ],
+      }
+    : //else we will return a empty object means get all {}
+      {};
   //just search and include the user model so we can show this book is by which user...
   const bookData = await Book.findAll({
     where,
@@ -161,17 +156,14 @@ router.get('/search', async (req, res) => {
   const books = bookData
     .map((book) => book.get({ plain: true }))
     .map((book) => {
-      book.user = book.users[0]
-      return book
-    })
-    ;
-
+      book.user = book.users[0];
+      return book;
+    });
   //render page with the given data
   res.render('homepage', {
     books,
     logged_in: req.session.logged_in,
   });
-})
-
+});
 
 module.exports = router;
