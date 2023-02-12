@@ -23,11 +23,11 @@
     </form>
   </div>
 
-  {{#if books.length}}
   <div class="col-12 project-list">
     <h3 class="mb-3">Current Books:</h3>
 
     <div id="current-books" class="books-container">
+      {{#if books.length}}
       {{#each books as |book|}}
       <a href="/book/{{book.id}}">
         <div class="profile-book">
@@ -42,9 +42,9 @@
         </div>
       </a>
       {{/each}}
+      {{/if}}
     </div>
   </div>
-  {{/if}}
 </div>
 
 {{!--
