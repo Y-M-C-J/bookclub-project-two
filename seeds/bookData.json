@@ -2,19 +2,19 @@
   {
     "name": "Harry Potter",
     "author": "JK ROWLING",
-    "thumbnail":"https://wallpaper.dog/large/17100296.jpg",
+    "thumbnail": "https://wallpaper.dog/large/17100296.jpg",
     "description": "You're a wizard Harry!"
   },
   {
     "name": "Lord of the Rings",
     "author": "TOLKEIN",
-    "thumbnail":"https://img.exclusivebooks.co.za/biblio/thumbnail.php?isbn=9780008537722&w=280&h=450&rc=1",
+    "thumbnail": "https://img.exclusivebooks.co.za/biblio/thumbnail.php?isbn=9780008537722&w=280&h=450&rc=1",
     "description": "One ring to rule them all."
   },
   {
     "name": "Neuromancer",
     "author": "W. Gibson",
-    "thumbnail":"https://live.staticflickr.com/3001/2827620644_0d837d1bc0_b.jpg",
+    "thumbnail": "https://live.staticflickr.com/3001/2827620644_0d837d1bc0_b.jpg",
     "description": "The original cyberpunk."
   }
 ]

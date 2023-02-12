@@ -29,7 +29,7 @@ const sess = {
     secure: false,
     sameSite: 'strict',
   },
-  resave: true, // Don't save the session if it's not modified
+  resave: true,
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize,

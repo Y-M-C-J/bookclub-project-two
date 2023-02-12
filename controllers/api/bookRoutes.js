@@ -6,28 +6,43 @@ const nodeFetch = require('node-fetch');
 // create a new book and associate the book with the user
 router.post('/', withAuth, async (req, res) => {
   try {
+    // setup request url
     let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
+
+    // api key from the .env
     let apiKey = process.env.API_KEY;
     let bookName = req.body.name;
+
+    // full api request
     let requestUrl = `${baseURL}${bookName}&key=${apiKey}`;
 
+    // make request and wait for the json results
     const bookVolumesRes = await nodeFetch(requestUrl);
     let bookVolumes = await bookVolumesRes.json();
+
+    // it returns an object that has items array (it can be null so we used ?. instead of directly . to prevent any undefined errors)
+
+    // some items may not have thumbnail so we filter only the items that has thumbnail if we did not filter sometimes the first array item may not contain thumbnail
     let bookImage = bookVolumes?.items.filter(
       (b) => b?.volumeInfo?.imageLinks?.thumbnail
     );
+
+    // same here like thumbnail but this time for description
     let bookDescription = bookVolumes?.items.filter(
       (b) => b?.volumeInfo?.description
     );
 
+    // by default the thumbnail and description has those values
     let thumbnail =
       'https://ankan-kagoshima.jp/data/wp-content/themes/cms/images/dvd/noimage.jpg';
     let description = 'No description available for this book';
 
+    //if the bookImage has items on it so there is a thumbnail so we change the thumbnail variable from the default value to the new one
     if (bookImage?.length) {
       thumbnail = bookImage[0]?.volumeInfo?.imageLinks?.thumbnail;
     }
 
+    // same thing if book Description has values then we set the description to the new value instead of the default one
     if (bookDescription?.length) {
       description = bookDescription[0]?.volumeInfo?.description;
     }
@@ -46,7 +61,6 @@ router.post('/', withAuth, async (req, res) => {
     res.status(200).json({ newBook, bookVolumes }); // send back the book
   } catch (err) {
     // catch any errors
-    console.log(err);
     res.status(400).json(err); // send back the error
   }
 });
@@ -89,6 +103,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(200).json(bookData); // send back the book
   } catch (err) {
     // catch any errors
+
     res.status(500).json(err); // send back the error
   }
 });
