@@ -67,7 +67,7 @@ addToReadlist.addEventListener('click', async () => {
         title: 'Good Job!',
         text: data.destroyed
           ? 'Book has been removed from your read list'
-          : 'Boos has been added to your read list',
+          : 'Book has been added to your read list',
         icon: 'success',
       });
       // alert(data.destroyed ? 'Book has been removed from your Read List' : 'Book has been added to your Read List')
