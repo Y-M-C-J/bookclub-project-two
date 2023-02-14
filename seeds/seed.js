@@ -18,12 +18,13 @@ const seedDatabase = async () => {
   // Loop through each book in the bookData JSON file and create a new book instance
   for (const book of bookData) {
     // Create the book with a random user_id from the created users
+    const user = users[Math.floor(Math.random() * users.length)]
     const bookData = await Book.create({
       ...book,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
+      user_id: user.id,
     });
     // Add a relationship between the first user and the created book with a through option
-    await bookData.addUser(users[0], { through: { selfGranted: false } });
+    await bookData.addUser(user, { through: { selfGranted: false } });
   }
 
   // Exit the process when done

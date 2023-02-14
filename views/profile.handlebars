@@ -18,20 +18,16 @@
         <input class="form-input" type="text" id="book-author" name="book-author" />
       </div>
       <div class="form-group">
-        <label for="book-desc">description:</label>
-        <textarea class="form-input" id="book-desc" name="book-desc"></textarea>
-      </div>
-      <div class="form-group">
         <button id="addbook-btn" type="submit" class="btn btn-primary">Add</button>
       </div>
     </form>
   </div>
 
-  {{#if books.length}}
   <div class="col-12 project-list">
     <h3 class="mb-3">Current Books:</h3>
 
     <div id="current-books" class="books-container">
+      {{#if books.length}}
       {{#each books as |book|}}
       <a href="/book/{{book.id}}">
         <div class="profile-book">
@@ -46,9 +42,9 @@
         </div>
       </a>
       {{/each}}
+      {{/if}}
     </div>
   </div>
-  {{/if}}
 </div>
 
 {{!--

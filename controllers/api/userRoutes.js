@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
+const ReadList = require('../../models/ReadList');
 
 router.post('/', async (req, res) => {
   try {
@@ -54,6 +55,37 @@ router.post('/logout', (req, res) => {
     });
   } else {
     res.status(404).end();
+  }
+});
+
+router.post('/addToReadList', async (req, res) => {
+  try {
+    //destructs the book_id from req.body it's like re.body.book_id just to avoid writing req.body every time
+    const { book_id } = req.body;
+    //check if book exist
+    const bookExist = await ReadList.findOne({ where: { book_id } });
+    let destroyed = false;
+
+    //if book exists remove it
+    if (bookExist) {
+      bookExist.destroy();
+      destroyed = true;
+    }
+
+    //if not exist add it
+    else {
+      await ReadList.create({
+        user_id: req.session.user_id,
+        book_id,
+      });
+    }
+
+    //return the destroyed variable which indicated if the book added or removed
+    res.status(200).json({
+      destroyed,
+    });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 

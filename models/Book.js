@@ -22,9 +22,6 @@ Book.init(
     description: {
       type: DataTypes.TEXT,
     },
-    thumbnail: {
-      type: DataTypes.STRING,
-    },
     date_added: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -36,6 +33,11 @@ Book.init(
         model: 'user',
         key: 'id',
       },
+    },
+
+    //new field for thumbnail url
+    thumbnail: {
+      type: DataTypes.STRING,
     },
   },
   {

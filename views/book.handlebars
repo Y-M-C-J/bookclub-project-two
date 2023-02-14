@@ -14,9 +14,20 @@
       <p>{{{author}}}</p>
       <p>{{description}}</p>
       <p>Created by {{user.name}} on {{format_date date_added}}</p>
+      {{#unless logged_in}}
+      <p>Login to read this book</p>
+      {{/unless }}
+      {{#if logged_in}}
       <p>
-        <button class="btn btn-primary">Read this book!</button>
+        <button id="add-readlist" data-bookId={{id}} class="btn btn-primary">
+          {{#if in_readlist}}
+          Remove from Read List
+          {{else}}
+          Read this book
+          {{/if}}
+        </button>
       </p>
+      {{/if}}
     </div>
   </div>
 
@@ -39,9 +50,9 @@
   </div>
 
   {{#if logged_in}}
-    <input type="text" id="comment-title" class="w-100 form-input mb-2" placeholder="Comment title">
-    <textarea id="comment-body" rows="5" class="w-100 form-input" placeholder="Your comment body..."></textarea>
-    <button id="add-comment" data-bookId={{id}} class="btn btn-light">Add Comment</button>
+  <input type="text" id="comment-title" class="w-100 form-input mb-2" placeholder="Comment title">
+  <textarea id="comment-body" rows="5" class="w-100 form-input" placeholder="Your comment body..."></textarea>
+  <button id="add-comment" data-bookId={{id}} class="btn btn-light">Add Comment</button>
   {{/if}}
 </div>
 

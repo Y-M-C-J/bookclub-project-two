@@ -1,28 +1,43 @@
-// require('dotenv').config();
-// require('dotenv').config({ path: require('find-config')('.env') });
-
 const newBookData = async (event) => {
+  //prevent the form from refreshing the page
   event.preventDefault();
 
+  //get ready the values for the POST request
+  //we have removed the description field as we are adding it in the server
   const name = document.querySelector('#book-name').value.trim();
   const author = document.querySelector('#book-author').value.trim();
-  const description = document.querySelector('#book-desc')?.value?.trim();
-  const addBookBtn = document.querySelector('#addbook-btn')
+  const addBookBtn = document.querySelector('#addbook-btn');
 
-  if (name && author) {
-    addBookBtn.textContent = 'Adding...'
-    addBookBtn.setAttribute('disabled', true)
+  //instead of hading the if statement like this name && author (do only if the name and author exists) we want only when we have the name
+  //so here if we don't have a name just directly return null and do nothing
+  if (!name) return null;
+  //else if we have a name continue
+
+  //changing the text for add button to show the user that something is going on
+  //and making the button disabled to prevent spamming the button
+  addBookBtn.textContent = 'Adding...';
+  addBookBtn.setAttribute('disabled', true);
+
+  //inside try catch to prevent the adding... because the user is logged off so we catch the error
+  try {
+    //post request to the endpoint we built /api/books
     const response = await fetch(`/api/books`, {
       method: 'POST',
-      body: JSON.stringify({ name, author, description }),
+      //body we send name author no need for description as we fetch it in the server
+      body: JSON.stringify({ name, author }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
+    //if the request is ok means the status code in the 200 range
     if (response.ok) {
-      const data = await response.json()
+      //then get me the json results
+      //we can't do the await response.json() before checking the response.ok as sometimes we may have a server error
+      //and it will not return a json so we will have and error here as the server is not sending a valid json
+      const data = await response.json();
 
+      //create a book html element with the newBook data
       const newBook = `
       <a href="/book/${data.newBook.id}">
         <div class="profile-book">
@@ -35,17 +50,23 @@ const newBookData = async (event) => {
             </svg>
           </button>
         </div>
-      </a>`
+      </a>`;
 
-      document.querySelector('#current-books').insertAdjacentHTML('beforeend', newBook)
+      //we append the book to the #current-books parent before end
+      document
+        .querySelector('#current-books')
+        .insertAdjacentHTML('beforeend', newBook);
 
-      addBookBtn.textContent = 'Add'
-      addBookBtn.removeAttribute('disabled')
-      console.log(data.bookVolumes)
-
+      //when all this is dine put back the button to the normal state
+      addBookBtn.textContent = 'Add';
+      addBookBtn.removeAttribute('disabled');
     } else {
       alert('Failed to add book');
     }
+  } catch (err) {
+    //if there is an error show the alert and reload
+    alert('Failed to add book');
+    window.location.reload();
   }
 };
 
@@ -55,15 +76,14 @@ const deleteBook = async (event, id) => {
   const response = await fetch(`/api/books/${id}`, {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   });
 
   if (response.ok) {
-    window.location.replace('/profile')
+    window.location.replace('/profile');
   }
-}
-
+};
 
 document
   .querySelector('.new-book-form')
