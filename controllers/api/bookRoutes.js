@@ -45,6 +45,7 @@ router.post('/', withAuth, async (req, res) => {
     //same thing if bookDescription has values then we set the description to the new value instead of the default one
     if (bookInfo?.length) {
       req.body.author = bookInfo[0]?.volumeInfo?.authors[0];
+      req.body.name = bookInfo[0]?.volumeInfo?.title;
       description = bookInfo[0]?.volumeInfo?.description;
     }
     // create a new book with the user_id from the session
