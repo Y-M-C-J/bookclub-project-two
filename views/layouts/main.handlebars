@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <div class="flex-column justify-space-around">
+  {{!-- <div class="flex-column justify-space-around">
     <header class="display-flex justify-space-between align-center p-2">
       <h1>
         <a href="/"><img src="/images/Bookshare.png" alt="" style="width:300px;height:180px;"></a>
@@ -29,15 +29,82 @@
         {{/if}}
         
       </nav>
-    </header>
-    <main class="container container-fluid mt-5">
+    </header> --}}
+  <div class="relative bg-white">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
+      <div class="flex justify-start lg:w-0 lg:flex-1">
+        <a href="#">
+          <span class="sr-only">BookShare</span>
+          <img class="h-12 w-auto" src="/images/Bookshare.png" alt="">
+        </a>
+      </div>
+      {{#if logged_in}}
+      <nav class="hidden space-x-10 md:flex">
+        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">My Books</a>
+        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Reading List</a>
+      </nav>
+      <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+        <button id="logout" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign out</button>
+      </div>
+      {{else}}
+      <div class="hidden space-x-10 md:flex">
+        <p class="text-base font-medium text-gray-500">Share and discuss books with your friends.</p>
+      </div>
+      <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0"></div>
+       <a href="/login" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign in</a>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <!--
+    Mobile menu, show/hide based on mobile menu state.
+
+    Entering: "duration-200 ease-out"
+      From: "opacity-0 scale-95"
+      To: "opacity-100 scale-100"
+    Leaving: "duration-100 ease-in"
+      From: "opacity-100 scale-100"
+      To: "opacity-0 scale-95"
+  -->
+  <div class="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden">
+    <div class="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+      <div class="px-5 pt-5 pb-6">
+        <div class="flex justify-center">
+          <div>
+            <img class="h-12 w-auto" src="/images/Bookshare.png" alt="BookShare">
+          </div>
+        </div>
+      <div class="space-y-6 py-6 px-5">
+        {{#if logged_in}}
+        <div class="flex justify-between">
+          <a href="/profile" class="text-base font-medium text-gray-900 hover:text-gray-700">My Books</a>
+
+          <a href="/readlist" class="text-base font-medium text-gray-900 hover:text-gray-700">Reading List</a>
+        </div>
+        <div class="flex justify-center">
+        <button id="logout" class=" inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign out</button>
+        </div>
+        {{else}}
+        <div>
+          <a href="/login" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign in</a>
+        </div>
+         {{/if}}
+      </div>
+    </div>
+  </div>
+
+  </div>
+    <div class="container container-fluid mt-5">
       <!-- Render the sub layout -->
       {{{ body }}}
-    </main>
+    </div>
     <footer>
 
     </footer>
-  </div>
+</div>
+
 
   <!-- Render script for logged in users only -->
   {{#if logged_in}}
@@ -45,15 +112,6 @@
   {{/if}}
 
   <script src='/lib/sweetalert2@11.js'></script>
-
-  <script>
-        let button = $('#menu-btn'); // Hamburger Icon
-        let menu = $('#menu'); // Menu
-
-        button.click(function () {
-            menu.slideToggle();
-        });
-    </script>
 </body>
 
 </html>
