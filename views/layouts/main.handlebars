@@ -4,32 +4,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Club</title>
-  <link rel="stylesheet" href="/css/jass.css">
+  <title>Book Share</title>
+  {{!--
+  <link rel="stylesheet" href="/css/jass.css"> --}}
+
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/x-icon" href="/images/Bookshare.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
   <div class="flex-column justify-space-around">
-    <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        <span role="img" aria-label="money">💸</span>
-        <a href="/">Welcome to the bookclub!</a>
-      </h1>
-      <nav>
-        <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
-        <a href="/profile">Profile</a> |
-        <a href="/readList">Read List</a> |
-        <button class="no-button" id="logout">logout</button>
-        {{else}}
-        <a href="/login">login</a>
-        {{/if}}
-      </nav>
-    </header>
-    <main class="container container-fluid mt-5">
+    <div class="border-b p-2">
+      <header class="container mx-auto flex items-center justify-between">
+        <h1>
+          <a href="/"><img src="/images/Bookshare.png" alt="" class="max-w-[7rem]"></a>
+        </h1>
+        <nav class="hidden lg:flex items-center space-x-3 text-primary">
+          {{#if logged_in}}
+          <a href="/profile">My Books</a>
+          <a href="/readList">Reading List</a>
+          <button onclick="logout()" class="no-button" id="logout">logout</button>
+          {{else}}
+          <a href="/login">login</a>
+          {{/if}}
+        </nav>
+        <button class="toggle-btn lg:hidden block" id="nav-toggler">
+          <svg width="40px" height="40px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <line x1="0" y1="17" x2="48" y2="17" stroke-width="1" />
+              <line x1="0" y1="31" x2="48" y2="31" stroke-width="1" />
+            </g>
+
+            <g>
+              <line x1="0" y1="24" x2="48" y2="24" stroke-width="1" />
+              <line x1="0" y1="24" x2="48" y2="24" stroke-width="1" />
+            </g>
+          </svg>
+        </button>
+      </header>
+    </div>
+    <main class="relative">
       <!-- Render the sub layout -->
-      {{{ body }}}
+      <div id="mobile-nav" style="z-index:-100"
+        class="opacity-0 duration-500 fixed w-full h-full h-screen z-10 top-[75px] left-0 bg-[#f7f6f1]">
+        <div class="container mx-auto py-10 px-5">
+          <nav class="flex flex-col space-y-5 text-primary">
+            {{#if logged_in}}
+            <a class="text-2xl" href="/profile">My Books</a>
+            <a class="text-2xl" href="/readList">Reading List</a>
+            <div class="border-b w-full"></div>
+            <button onclick="logout()" class="text-2xl w-fit pt-10" id="logout">Logout</button>
+            {{else}}
+            <a class="text-2xl" href="/login">Login</a>
+            {{/if}}
+          </nav>
+        </div>
+      </div>
+      <div class="container mx-auto px-2">
+        {{{ body }}}
+      </div>
     </main>
     <footer>
 
@@ -38,10 +72,24 @@
 
   <!-- Render script for logged in users only -->
   {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+    <script src="/js/logout.js"></script>
   {{/if}}
 
   <script src='/lib/sweetalert2@11.js'></script>
+
+  <script>
+    const navToggler = document.getElementById('nav-toggler')
+    const mobileNav = document.getElementById('mobile-nav')
+    const button = document.querySelector('.toggle-btn');
+
+
+    navToggler.addEventListener('click', () => {
+      mobileNav.classList.toggle('opacity-0')
+      mobileNav.style = `z-index: ${mobileNav.classList.contains('opacity-0') ? -100 : 100}`
+      button.classList.toggle('-menu-open');
+    })
+
+  </script>
 </body>
 
 </html>

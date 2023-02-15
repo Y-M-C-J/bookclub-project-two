@@ -6,32 +6,34 @@
   user.name: the name of the user who created the book
   format_date: a function to format the date of when the book was created
 -->
-<div class="book-page">
-  <div class="book mb-3">
-    <img src="{{ thumbnail }}" />
-    <div class="info">
-      <h2>{{name}}</h2>
-      <p>{{{author}}}</p>
-      <p>{{description}}</p>
-      <p>Created by {{user.name}} on {{format_date date_added}}</p>
-      {{#unless logged_in}}
-      <p>Login to read this book</p>
-      {{/unless }}
-      {{#if logged_in}}
-      <p>
-        <button id="add-readlist" data-bookId={{id}} class="btn btn-primary">
-          {{#if in_readlist}}
-          Remove from Read List
-          {{else}}
-          Read this book
-          {{/if}}
-        </button>
-      </p>
-      {{/if}}
+<div class="py-10">
+  <div class="mb-5 text-primary">
+    <div class="flex flex-col sm:flex-row gap-5">
+      <img src="{{ thumbnail }}" class="w-[192px] h-[287px]" />
+      <div class="text-lg flex flex-col space-y-3">
+        <h2 class="font-semibold text-2xl md:text-3xl xl:text-4xl">{{name}}</h2>
+        <p class="font-semibold text-xl">{{{author}}}</p>
+        <p>Recommended by {{user.name}} on {{format_date date_added}}</p>
+        {{#unless logged_in}}
+        <p>Login to read this book</p>
+        {{/unless }}
+        {{#if logged_in}}
+        <p>
+          <button id="add-readlist" data-bookId={{id}} class="w-full md:max-w-[13rem] max-w-full p-2 bg-[#1f4d8f] rounded hover:bg-opacity-80 duration-200 text-white mt-5">
+            {{#if in_readlist}}
+            Remove from Read List
+            {{else}}
+            Read this book
+            {{/if}}
+          </button>
+        </p>
+        {{/if}}
+      </div>
     </div>
+    <p class="mt-5">{{description}} {{description}} {{description}}</p>
   </div>
 
-  <h4 class="mb-3">Comments: ({{get_length comments}})</h4>
+  <h4 class="text-lg text-primary py-5 border-t">Comments: ({{get_length comments}})</h4>
 
   {{#unless logged_in}}
   <p>Login to add your comment...</p>
@@ -39,9 +41,9 @@
 
   <div class="mb-5">
     {{#each comments as |comment|}}
-    <div class="comment">
-      <div style="display:flex;justify-content:space-between">
-        <h6>by {{comment.user.name}} | {{comment.title}}</h6>
+    <div class="comment text-primary">
+      <div class="flex items-center justify-between">
+        <h6 class="font-medium capitalize">by {{comment.user.name}} | {{comment.title}}</h6>
         <span>{{format_date comment.createdAt}}</span>
       </div>
       <p>{{comment.body}}</p>
@@ -50,9 +52,14 @@
   </div>
 
   {{#if logged_in}}
-  <input type="text" id="comment-title" class="w-100 form-input mb-2" placeholder="Comment title">
-  <textarea id="comment-body" rows="5" class="w-100 form-input" placeholder="Your comment body..."></textarea>
-  <button id="add-comment" data-bookId={{id}} class="btn btn-light">Add Comment</button>
+  <div class="flex flex-col">
+    <input type="text" id="comment-title" class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40"
+      placeholder="Comment title">
+    <textarea id="comment-body" rows="5" class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40"
+      placeholder="Your comment body..."></textarea>
+    <button id="add-comment" data-bookId={{id}}
+      class="w-full md:max-w-[13rem] max-w-full p-2 bg-[#1f4d8f] rounded hover:bg-opacity-80 duration-200 text-white mt-5">Add Comment</button>
+  </div>
   {{/if}}
 </div>
 

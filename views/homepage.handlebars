@@ -1,16 +1,37 @@
 <!-- Loop over each object in the projects array -->
 
 
-<form action="/search" method="GET" class="form search-form">
-  <div class="form-group">
-    <input class="form-input" type="text" name="q" placeholder="Search..." />
-  </div>
-  <div class="form-group">
-    <button class="btn btn-primary" type="submit">Search</button>
+<form action="/search" method="GET" class="py-8">
+  <div class="flex space-x-1 border-b-2">
+    <input class="flex-grow p-2 bg-transparent rounded outline-none" type="text" name="q" placeholder="Search..." />
+    <button type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-6 h-6 text-primary">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      </svg>
+
+    </button>
   </div>
 </form>
 
-{{#each books as |book| }}
+<div class="py-10">
+  <h1 class="text-3xl text-primary mb-10">Most recommended books</h1>
+
+  <div class="grid grid-cols-1 sm:flex flex-wrap gap-5">
+    {{#each books as |book| }}
+    <a href="/book/{{book.id}}" class="text-[#2b5ea5] mb-5 mx-auto sm:mx-0">
+      <img src={{book.thumbnail}} alt="Book Cover"
+        class="image hover:-translate-y-2 duration-200 w-[192px] h-[287px] mb-5 drop-shadow-xl">
+      <h5 class="font-medium">{{book.author}}</h5>
+      <p class="truncate max-w-[192px]">{{book.name}}</p>
+    </a>
+    {{/each}}
+  </div>
+</div>
+
+
+{{!-- {{#each books as |book| }}
 <div class="row mb-4 project py-2">
   <div class="col-12">
     <div style="display:flex;gap:1rem">
@@ -25,4 +46,4 @@
     </div>
   </div>
 </div>
-{{/each}}
+{{/each}} --}}
