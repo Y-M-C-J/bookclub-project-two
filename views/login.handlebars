@@ -1,42 +1,50 @@
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
+<div class="grid grid-cols-1 lg:grid-cols-11 gap-y-10 py-10">
 
-    <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
-      </div>
-      <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
+  <form class="form login-form border col-span-5 shadow-md w-full max-w-[35rem] p-3 mx-auto text-primary">
+    <h2 class="text-3xl font-semibold mb-7">Login</h2>
 
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
+    <div class="flex flex-col space-y-4">
+      <div class="flex-grow">
+        <label for="email-login">Email:</label>
+        <input class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40" type="text" id="email-login" />
       </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
+      <div class="flex-grow">
+        <label for="password-login">Password:</label>
+        <input class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40" type="password" id="password-login" />
       </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
+      <div class="flex-grow">
+        <button class="w-full p-2 bg-[#1f4d8f] rounded hover:bg-opacity-80 duration-200 text-white text-lg mt-5"
+          type="submit">Login</button>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
+    </div>
+  </form>
+
+  <div class="col-span-1">
+    <h2 class="text-center text-xl font-semibold text-primary">OR</h2>
   </div>
+
+  <form class="form signup-form border col-span-5 shadow-md w-full max-w-[35rem] p-3 mx-auto text-primary">
+    <h2 class="text-3xl font-semibold mb-7">Signup</h2>
+
+    <div class="flex flex-col space-y-4">
+      <div class="flex-grow">
+        <label for="name-signup">Name:</label>
+        <input class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40" type="text" id="name-signup" />
+      </div>
+      <div class="form-group">
+        <label for="email-signup">Email:</label>
+        <input class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40" type="text" id="email-signup" />
+      </div>
+      <div class="form-group">
+        <label for="password-signup">Password:</label>
+        <input class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40" type="password" id="password-signup" />
+      </div>
+      <div class="form-group">
+        <button class="w-full p-2 bg-[#1f4d8f] rounded hover:bg-opacity-80 duration-200 text-white text-lg mt-5" type="submit">Signup</button>
+      </div>
+    </div>
+  </form>
+
 </div>
 
 <script src="./js/login.js"></script>

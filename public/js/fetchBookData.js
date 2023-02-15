@@ -39,17 +39,21 @@ const newBookData = async (event) => {
 
       //create a book html element with the newBook data
       const newBook = `
-      <a href="/book/${data.newBook.id}">
-        <div class="profile-book">
-          <img src=${data.newBook.thumbnail} style="height: 180px;width: 128px;" />
-          <h6 class="h4 d-inline-block text-truncate" style="max-width: 128px;">${data.newBook.name}</h6>
-          <button onclick="deleteBook(event,${data.newBook.id})" class="btn btn-sm btn-danger">
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 448 512">
-              <path fill="#fff"
-                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-            </svg>
-          </button>
-        </div>
+      <a href="/book/${data.newBook.id}" class="mx-auto md:mx-0 w-fit">
+          <div class="profile-book relative">
+            <img src=${data.newBook.thumbnail} alt="Book Cover"
+              class="hover:-translate-y-2 duration-200 w-[128px] h-[180px] md:w-[192px] md:h-[287px] mb-5 drop-shadow-xl">
+            <h5 class="font-medium">${data.newBook.author}</h5>
+            <p class="truncate max-w-[128px] md:max-w-[192px]">${data.newBook.name}</p>
+
+            <button onclick="deleteBook(event,${data.newBook.id})" class="bg-red-500 rounded p-2 absolute top-1 right-1">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 text-white">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+            </button>
+          </div>
       </a>`;
 
       //we append the book to the #current-books parent before end
