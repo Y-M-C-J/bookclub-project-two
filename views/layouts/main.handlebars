@@ -20,13 +20,20 @@
         <h1>
           <a href="/"><img src="/images/Bookshare.png" alt="" class="max-w-[7rem]"></a>
         </h1>
+        <div class="hidden space-x-10 lg:flex">
+        <p class="text-base font-medium text-gray-500">Share and discuss books with your friends.</p>
+        </div>
         <nav class="hidden lg:flex items-center space-x-3 text-primary">
           {{#if logged_in}}
-          <a href="/profile">My Books</a>
-          <a href="/readList">Reading List</a>
-          <button onclick="logout()" class="no-button" id="logout">logout</button>
+          <a href="/profile" class="text-base font-medium text-gray-500 hover:text-gray-900">Add Books</a>
+        <a href="/readlist" class="text-base font-medium text-gray-500 hover:text-gray-900">Reading List</a>
+          <div class="">
+            <button id="logout" class="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign out</button>
+          </div>
           {{else}}
-          <a href="/login">login</a>
+              <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+       <a href="/login" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign in</a>
+      </div>
           {{/if}}
         </nav>
         <button class="toggle-btn lg:hidden block" id="nav-toggler">
@@ -51,7 +58,7 @@
         <div class="container mx-auto py-10 px-5">
           <nav class="flex flex-col space-y-5 text-primary">
             {{#if logged_in}}
-            <a class="text-2xl" href="/profile">My Books</a>
+            <a class="text-2xl" href="/profile">Add Books</a>
             <a class="text-2xl" href="/readList">Reading List</a>
             <div class="border-b w-full"></div>
             <button onclick="logout()" class="text-2xl w-fit pt-10" id="logout">Logout</button>

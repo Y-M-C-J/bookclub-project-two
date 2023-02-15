@@ -64,7 +64,7 @@ addToReadlist.addEventListener('click', async () => {
 
       //show a nice alert with the following data
       Swal.fire({
-        title: 'Good Job!',
+        title: 'Success!',
         text: data.destroyed
           ? 'Book has been removed from your read list'
           : 'Book has been added to your read list',
