@@ -6,11 +6,16 @@
 
     <div class="flex flex-wrap gap-5">
         {{#each readList as |list|}}
-        <a href="/book/{{list.book.id}}" class="mx-auto md:mx-0 w-fit">
-            <div class="profile-book">
-                <img src={{list.book.thumbnail}} alt="Book Cover"
-                    class="hover:-translate-y-2 duration-200 w-[192px] h-[287px] mb-2 drop-shadow-xl">
-                <p class="text-lg truncate max-w-[192px]">{{list.book.name}}</p>
+        <a href="/book/{{list.book.id}}" class="text-[#2b5ea5] mb-5 mx-auto sm:mx-0 group duration-200">
+            <div
+                class="hover:-translate-y-3 image-wrapper shine relative w-[192px] h-[287px] duration-200 mb-4 group-hover:shadow-2xl group-hover:shadow-amber-200">
+                <img src={{list.book.thumbnail}} alt="Book Cover" class="w-full h-full">
+                <img src="/images/book-cover-overlay.webp" alt=""
+                    class="absolute top-0 left-0 w-full h-full mix-blend-multiply">
+            </div>
+            <div class="group-hover:text-amber-600 duration-200">
+                <h5 class="text-[1.1rem] font-bold group-hover:font-bold truncate max-w-[192px]">{{list.book.name}}</h5>
+                <p class="truncate max-w-[192px]">{{list.book.author}}</p>
             </div>
         </a>
         {{/each}}
@@ -19,6 +24,6 @@
 
     {{!-- else we show the user that he have no books in the reading list --}}
     {{else}}
-    <p>You have no books in the reading list, try add some from <a href="/">Here</a></p>
+    <p>You have no books in the reading list, try add some from <a href="/" class="font-semibold text-gray-500 hover:scale-[105%] duration-200 hover:text-amber-600">HERE</a></p>
     {{/if}}
 </div>

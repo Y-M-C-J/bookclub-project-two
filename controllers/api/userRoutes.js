@@ -1,62 +1,82 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 const ReadList = require('../../models/ReadList');
+const { check, validationResult } = require('express-validator')
 
-router.post('/', async (req, res) => {
-  try {
-    const userData = await User.create(req.body);
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.status(200).json(userData);
-    });
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-router.post('/login', async (req, res) => {
-  try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-      return;
+router.post('/',
+  [
+    check('name', 'Name is required').notEmpty(),
+    check('email')
+      .isEmail().withMessage('Email si not valid')
+      .custom(async (email) => {
+        const exist = await User.findAll({ where: { email } })
+        if (exist.length) return Promise.reject()
+        Promise.resolve()
+      }).withMessage('Email already exist'),
+    check('password', 'Password must contain at least 8 characters').isLength({ min: 8 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
+    try {
+      const userData = await User.create(req.body);
 
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-      return;
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+
+        res.status(200).json(userData);
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(400).json(err);
+    }
+  });
+
+router.post('/login',
+  [
+    check('email', 'Email is not valid').isEmail(),
+    check('password', 'Password must contain at least 8 characters').isLength({ min: 8 }),
+  ],
+
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
+    try {
+      const userData = await User.findOne({ where: { email: req.body.email } });
 
-      res.json({ user: userData, message: 'You are now logged in!' });
-    });
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+      if (!userData) {
+        res
+          .status(400)
+          .json({ errors: [{ msg: 'Incorrect email or password, please try again' }] });
+        return;
+      }
 
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
-    res.status(404).end();
-  }
-});
+      const validPassword = await userData.checkPassword(req.body.password);
+
+      if (!validPassword) {
+        res
+          .status(400)
+          .json({ errors: [{ msg: 'Incorrect email or password, please try again' }] });
+        return;
+      }
+
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+
+        res.json({ user: userData, message: 'You are now logged in!' });
+      });
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
 
 router.post('/addToReadList', async (req, res) => {
   try {

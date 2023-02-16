@@ -1,9 +1,27 @@
+@font-face {
+  font-family: "Mier A";
+  font-weight: normal;
+  src: url(../fonts/MierA-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Mier A";
+  font-weight: bold;
+  src: url(../fonts/MierB-Bold.ttf);
+}
+
+* {
+  font-family: "Mier A";
+  font-weight: normal;
+}
+
 .text-primary {
   color: #1f4d8f;
 }
 
 body {
-  background-color: #f7f6f1;
+  background-image: linear-gradient(to bottom right, #f7f6f1 1%, #fff6ca 100%);
+  width: 100%;
 }
 
 .toggle-btn svg {
@@ -52,26 +70,56 @@ body {
   transform: rotate(-45deg);
 }
 
-.image {
-  position: relative;
+.image-wrapper {
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
-.image::before {
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::before {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
   content: "";
+  display: block;
+  height: 100%;
+  left: -95%;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.4);
-  z-index: 1;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 0.3s ease-in-out;
+  transform: skewX(-25deg);
+  width: 60%;
+  z-index: 2;
+}
+.shine:hover::before,
+.shine:focus::before {
+  -webkit-animation: shine 1s;
+  animation: shine 1s;
+}
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
 }
 
-.image:hover::before {
-  transform: scaleX(1);
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#mobile-nav {
+  background-image: linear-gradient(to bottom right, #f7f6f1 1%, #faefb6 100%)
 }
 
 /* header,
