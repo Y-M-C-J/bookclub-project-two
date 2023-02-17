@@ -16,7 +16,7 @@
           <label for="book-author">Author:</label>
           <input
             class="w-full border p-2 outline-none mt-1 bg-transparent rounded duration-200 focus:ring-2 ring-[#1f4d8f] ring-opacity-40"
-            type="text" id="book-author" name="book-author" placeholder="Optional"/>
+            type="text" id="book-author" name="book-author" placeholder="Optional" />
         </div>
         <button type="submit" id="addbook-btn"
           class="w-full md:max-w-[13rem] max-w-full p-2 bg-[#1f4d8f] rounded hover:bg-opacity-80 duration-200 text-white mt-5">Add</button>
@@ -29,22 +29,24 @@
       <div id="current-books" class="flex flex-wrap gap-5">
         {{#if books.length}}
         {{#each books as |book|}}
-        <a href="/book/{{book.id}}" class="mx-auto md:mx-0 w-fit">
-          <div class="profile-book relative">
-            <img src={{book.thumbnail}} alt="Book Cover"
-              class="hover:-translate-y-2 duration-200 w-[128px] h-[180px] md:w-[192px] md:h-[287px] mb-5 drop-shadow-xl">
-            <h5 class="font-medium">{{book.author}}</h5>
-            <p class="truncate max-w-[128px] md:max-w-[192px]">{{book.name}}</p>
-
-            <button onclick="deleteBook(event,{{book.id}})" class="bg-red-500 rounded p-2 absolute top-1 right-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-4 h-4 text-white">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-              </svg>
-
-            </button>
+        <a href="/book/{{book.id}}"
+          class="relative text-[#2b5ea5] mb-5 mx-auto sm:mx-0 group duration-200">
+          <div
+            class="hover:-translate-y-3 image-wrapper shine relative w-[192px] h-[287px] duration-200 mb-4 group-hover:shadow-2xl group-hover:shadow-amber-200">
+            <img src={{book.thumbnail}} alt="Book Cover" class="w-full h-full">
+            <img src="/images/book-cover-overlay.webp" alt="" class="absolute top-0 left-0 w-full h-full mix-blend-multiply">
           </div>
+          <div class="group-hover:text-amber-600 duration-200">
+            <h5 class="text-[1.1rem] font-bold group-hover:font-bold truncate max-w-[192px]">{{book.name}}</h5>
+            <p class="truncate max-w-[192px]">{{book.author}}</p>
+          </div>
+          <button onclick="deleteBook(event,{{book.id}})" class="bg-red-500 rounded p-2 absolute top-1 right-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-4 h-4 text-white">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+          </button>
         </a>
         {{/each}}
         {{/if}}

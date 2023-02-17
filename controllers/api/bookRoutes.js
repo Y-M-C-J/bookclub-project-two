@@ -7,14 +7,16 @@ const nodeFetch = require('node-fetch');
 router.post('/', withAuth, async (req, res) => {
   try {
     //setup request url
-    let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
+    let baseURL = 'https://www.googleapis.com/books/v1/volumes';
 
     //api key from the .env
     let apiKey = process.env.API_KEY;
     let bookName = req.body.name;
+    let bookAuthor = req.body.author;
+
 
     //full api request
-    let requestUrl = `${baseURL}${bookName}&key=${apiKey}`;
+    let requestUrl = `${baseURL}?q=${bookName},${bookAuthor}&key=${apiKey}`;
 
     //make request and wait for the json results
     const bookVolumesRes = await nodeFetch(requestUrl);
@@ -33,8 +35,7 @@ router.post('/', withAuth, async (req, res) => {
     );
 
     //by default the thumbnail and description has those values
-    let thumbnail =
-      'https://ankan-kagoshima.jp/data/wp-content/themes/cms/images/dvd/noimage.jpg';
+    let thumbnail = 'https://ankan-kagoshima.jp/data/wp-content/themes/cms/images/dvd/noimage.jpg';
     let description = 'No description available for this book';
 
     //if the bookImage has items on it so there is a thumbnail so we change the thumbnail variable from the default value to the new one
@@ -48,6 +49,18 @@ router.post('/', withAuth, async (req, res) => {
       req.body.name = bookInfo[0]?.volumeInfo?.title;
       description = bookInfo[0]?.volumeInfo?.description;
     }
+
+    const exist = await Book.findAll({
+      where: {
+        author: req.body.author,
+        name: req.body.name
+      }
+    })
+
+    if (exist.length) {
+      return res.status(400).send({ errors: [{ msg: 'Book already exist' }] })
+    }
+
     // create a new book with the user_id from the session
     const newBook = await Book.create({
       ...req.body,

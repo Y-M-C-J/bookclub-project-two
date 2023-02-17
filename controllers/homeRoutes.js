@@ -123,27 +123,30 @@ router.get('/login', (req, res) => {
 //search book by query route (q means query)
 router.get('/search', async (req, res) => {
   //get the q query parameter from url
-  const { q } = req.query;
+  const { q, order } = req.query;
 
   //if the q has a value then we will search a book
   const where = q
     ? {
-        //Sequelize.Op.or is the OR operator in a SQL statment
-        //so we want to match the name or author or description
-        [Sequelize.Op.or]: [
-          //Sequelize.Op.like is the LIKE operator in a SQL statment
-          //SELECT * FROM book WHERE name LIKE '%harry%' OR author LIKE '%harry%' OR description LIKE '%harry%'
-          //like this we have a deep search in books
-          { name: { [Sequelize.Op.like]: `%${q}%` } },
-          { author: { [Sequelize.Op.like]: `%${q}%` } },
-          { description: { [Sequelize.Op.like]: `%${q}%` } },
-        ],
-      }
+      //Sequelize.Op.or is the OR operator in a SQL statment
+      //so we want to match the name or author or description
+      [Sequelize.Op.or]: [
+        //Sequelize.Op.like is the LIKE operator in a SQL statment
+        //SELECT * FROM book WHERE name LIKE '%harry%' OR author LIKE '%harry%' OR description LIKE '%harry%'
+        //like this we have a deep search in books
+        { name: { [Sequelize.Op.like]: `%${q}%` } },
+        { author: { [Sequelize.Op.like]: `%${q}%` } },
+        { description: { [Sequelize.Op.like]: `%${q}%` } },
+      ],
+    }
     : //else we will return a empty object means get all {}
-      {};
+    {};
   //just search and include the user model so we can show this book is by which user...
   const bookData = await Book.findAll({
     where,
+    order: order ? [
+      ['name', order === 'A-Z' ? 'ASC' : 'DESC']
+    ] : [],
     include: [
       {
         model: User,
@@ -163,7 +166,17 @@ router.get('/search', async (req, res) => {
   res.render('homepage', {
     books,
     logged_in: req.session.logged_in,
+    q,
+    order
   });
+});
+
+router.get('/logout', (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy();
+  }
+
+  res.redirect('/')
 });
 
 module.exports = router;
