@@ -1,111 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Share</title>
-  {{!--
-  <link rel="stylesheet" href="/css/jass.css"> --}}
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Book Share</title>
+    {{!
+  <link rel="stylesheet" href="/css/jass.css"> }}
 
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" type="image/x-icon" href="/images/Bookshare.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='icon' type='image/x-icon' href='/images/Bookshare.png' />
+    <script src='https://cdn.tailwindcss.com'></script>
+  </head>
 
-<!-- Define the main content of the webpage -->
-<body>
-  <div class="w-full min-h-screen">
-        <!-- Create a header section with logo and navigation links -->
-    <div class=" border-b p-2">
-      <header class="container mx-auto flex items-center justify-between">
-               <!-- Add a logo to the header with a link to the home page -->
-        <h1>
-          <a href="/"><img src="/images/Bookshare.png" alt="" class="max-w-[7rem]"></a>
-        </h1>
-                <!-- Add a tagline to the header -->
-        <div class="hidden lg:block">
-          <p class="text-lg font-medium text-gray-500 drop-shadow-lg text-amber-900">Share and discuss books with your friends.</p>
-        </div>
-                <!-- Add navigation links to the header -->
-        <nav class="hidden lg:flex items-center space-x-5 text-primary">
-                    <!-- Show links for add books and reading list if user is logged in -->
-          {{#if logged_in}}
-          <a href="/profile" class="font-medium text-gray-500 hover:scale-[105%] duration-200 hover:text-amber-600">Add
-            Books</a>
-          <a href="/readlist"
-            class="font-medium text-gray-500 hover:scale-[105%] duration-200 hover:text-amber-600">Reading List</a>
-          <div class="">
-                        <!-- Show sign out button if user is logged in -->
-            <a href="/logout" class="hover:scale-[105%] duration-200 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-500">Sign out</a>
+  <!-- Define the main content of the webpage -->
+  <body>
+    <div class='w-full relative m-0 p-0 min-h-screen'>
+      <!-- Create a header section with logo and navigation links -->
+      <div class='border-b p-2'>
+        <header class='container mx-auto flex items-center justify-between'>
+          <!-- Add a logo to the header with a link to the home page -->
+          <h1>
+            <a href='/'><img
+                src='/images/Bookshare.png'
+                alt=''
+                class='max-w-[7rem]'
+              /></a>
+          </h1>
+          <!-- Add a tagline to the header -->
+          <div class='hidden lg:block'>
+            <p
+              class='text-lg font-medium text-gray-500 drop-shadow-lg text-amber-900'
+            >Share and discuss books with your friends.</p>
           </div>
-          {{else}}
-                    <!-- Show login link if user is not logged in -->
-          <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a href="/login"
-              class="ml-8 inline-flex hover:scale-[105%] duration-200 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-[#1f4d8f] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-opacity-90">Sign
-              in</a>
-          </div>
-          {{/if}}
-        </nav>
-                <!-- Add a button for toggling the mobile navigation menu -->
-        <button class="toggle-btn lg:hidden block" id="nav-toggler">
-          <svg width="40px" height="40px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <line x1="0" y1="17" x2="48" y2="17" stroke-width="1" />
-              <line x1="0" y1="31" x2="48" y2="31" stroke-width="1" />
-            </g>
-
-            <g>
-              <line x1="0" y1="24" x2="48" y2="24" stroke-width="1" />
-              <line x1="0" y1="24" x2="48" y2="24" stroke-width="1" />
-            </g>
-          </svg>
-        </button>
-      </header>
-    </div>
-
-        <!-- Create a container for the main content of the webpage -->
-    <main class="relative">
-      <!-- Create a mobile navigation menu -->
-      <div id="mobile-nav" style="z-index:-100"
-        class="block lg:hidden opacity-0 duration-500 fixed w-full h-full h-screen z-10 top-[75px] left-0 bg-[#f7f6f1]">
-        <div class="container mx-auto py-10 px-5">
-          <nav class="flex flex-col space-y-5 text-primary">
+          <!-- Add navigation links to the header -->
+          <nav class='hidden lg:flex items-center space-x-5 text-primary'>
+            <!-- Show links for add books and reading list if user is logged in -->
             {{#if logged_in}}
-            <a class="text-2xl hover:text-amber-600 duration-200" href="/profile">Add Books</a>
-            <a class="text-2xl hover:text-amber-600 duration-200" href="/readList">Reading List</a>
-            <div class="border-b w-full"></div>
-            <a href="/logout" class="text-2xl w-fit pt-10 text-red-400 hover:text-red-500 dyration-200">Logout</a>
+              <a
+                href='/profile'
+                class='font-medium text-gray-500 hover:scale-[105%] duration-200 hover:text-amber-600'
+              >Add Books</a>
+              <a
+                href='/readlist'
+                class='font-medium text-gray-500 hover:scale-[105%] duration-200 hover:text-amber-600'
+              >Reading List</a>
+              <div class=''>
+                <!-- Show sign out button if user is logged in -->
+                <a
+                  href='/logout'
+                  class='hover:scale-[105%] duration-200 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-500'
+                >Sign out</a>
+              </div>
             {{else}}
-            <a class="text-2xl" href="/login">Login</a>
+              <!-- Show login link if user is not logged in -->
+              <div
+                class='hidden items-center justify-end md:flex md:flex-1 lg:w-0'
+              >
+                <a
+                  href='/login'
+                  class='ml-8 inline-flex hover:scale-[105%] duration-200 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-[#1f4d8f] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-opacity-90'
+                >Sign in</a>
+              </div>
             {{/if}}
           </nav>
+          <!-- Add a button for toggling the mobile navigation menu -->
+          <button class='toggle-btn lg:hidden block' id='nav-toggler'>
+            <svg
+              width='40px'
+              height='40px'
+              viewBox='0 0 48 48'
+              version='1.1'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <g>
+                <line x1='0' y1='17' x2='48' y2='17' stroke-width='1' />
+                <line x1='0' y1='31' x2='48' y2='31' stroke-width='1' />
+              </g>
+
+              <g>
+                <line x1='0' y1='24' x2='48' y2='24' stroke-width='1' />
+                <line x1='0' y1='24' x2='48' y2='24' stroke-width='1' />
+              </g>
+            </svg>
+          </button>
+        </header>
+      </div>
+
+      <!-- Create a container for the main content of the webpage -->
+      <main class='relative'>
+        <!-- Create a mobile navigation menu -->
+        <div
+          id='mobile-nav'
+          style='z-index:-100'
+          class='block lg:hidden opacity-0 duration-500 fixed w-full h-full h-screen z-10 top-[75px] left-0 bg-[#f7f6f1]'
+        >
+          <div class='container mx-auto py-10 px-5'>
+            <nav class='flex flex-col space-y-5 text-primary'>
+              {{#if logged_in}}
+                <a
+                  class='text-2xl hover:text-amber-600 duration-200'
+                  href='/profile'
+                >Add Books</a>
+                <a
+                  class='text-2xl hover:text-amber-600 duration-200'
+                  href='/readList'
+                >Reading List</a>
+                <div class='border-b w-full'></div>
+                <a
+                  href='/logout'
+                  class='text-2xl w-fit pt-10 text-red-400 hover:text-red-500 dyration-200'
+                >Logout</a>
+              {{else}}
+                <a class='text-2xl' href='/login'>Login</a>
+              {{/if}}
+            </nav>
+          </div>
         </div>
-      </div>
-      <div class="container mx-auto px-2">
-        {{{ body }}}
-      </div>
-    </main>
-  </div>
+        <div class='container mx-auto px-2'>
+          {{{body}}}
+        </div>
+      </main>
+      <footer
+        class='bg-[#2b5ea5] border-t-2 border-red-300 absolute h-10 inset-x-0 bottom-0 text-white text-center pt-1'
+      >
+        <p class='text-[#f7f6f1] text-center'>
+          Copyright &copy;
+          <script>document.write(new Date().getFullYear())</script>
+          Brought to you by YMCJ.
+        </p>
+      </footer>
+    </div>
 
-  <script src='/lib/sweetalert2@11.js'></script>
+    <script src='/lib/sweetalert2@11.js'></script>
 
-  <script>
-    const navToggler = document.getElementById('nav-toggler')
-    const mobileNav = document.getElementById('mobile-nav')
-    const button = document.querySelector('.toggle-btn');
+    <script>
+      const navToggler = document.getElementById('nav-toggler') const mobileNav
+      = document.getElementById('mobile-nav') const button =
+      document.querySelector('.toggle-btn');
+      navToggler.addEventListener('click', () => {
+      mobileNav.classList.toggle('opacity-0') mobileNav.style = `z-index:
+      ${mobileNav.classList.contains('opacity-0') ? -100 : 100}`
+      document.body.style = `overflow-y:
+      ${mobileNav.classList.contains('opacity-0') ? 'auto' : 'hidden'}`
+      button.classList.toggle('-menu-open'); })
 
-
-    navToggler.addEventListener('click', () => {
-      mobileNav.classList.toggle('opacity-0')
-      mobileNav.style = `z-index: ${mobileNav.classList.contains('opacity-0') ? -100 : 100}`
-      document.body.style = `overflow-y: ${mobileNav.classList.contains('opacity-0') ? 'auto' : 'hidden'}`
-      button.classList.toggle('-menu-open');
-
-    })
-
-  </script>
-</body>
+    </script>
+  </body>
 
 </html>
