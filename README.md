@@ -30,6 +30,8 @@ Create database tables:
 Execute the program:
 - Run "npm start"
 ## Application Demo Snippet
+![book_share](https://user-images.githubusercontent.com/114820394/219548214-13271e3f-85dc-4a9a-80e0-a5f4dac9f10e.gif)
+
 ## :link: Deployed Site Link
 https://bookclub-project-two.herokuapp.com/
 ## Tech Stack
